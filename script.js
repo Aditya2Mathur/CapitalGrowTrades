@@ -111,4 +111,34 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
         revealObserver.observe(el);
     });
+
+    // 5. Countdown Timer
+    function startCountdown() {
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        
+        if (!hoursEl || !minutesEl || !secondsEl) return;
+        
+        // Target time based on design: 6 hours, 10 minutes, 37 seconds
+        let totalSeconds = (6 * 3600) + (10 * 60) + 37;
+        
+        const timer = setInterval(() => {
+            if (totalSeconds <= 0) {
+                clearInterval(timer);
+                return;
+            }
+            totalSeconds--;
+            
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            
+            hoursEl.textContent = h.toString().padStart(2, '0');
+            minutesEl.textContent = m.toString().padStart(2, '0');
+            secondsEl.textContent = s.toString().padStart(2, '0');
+        }, 1000);
+    }
+    
+    startCountdown();
 });
